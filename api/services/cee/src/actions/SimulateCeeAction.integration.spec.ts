@@ -49,7 +49,6 @@ test.before(async (t) => {
     t.context = { db, kernel };
   } catch (e) {
     t.log(e.message);
-    t.log(e.stack);
   }
 });
 
