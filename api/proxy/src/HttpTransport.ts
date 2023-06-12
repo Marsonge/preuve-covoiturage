@@ -894,7 +894,7 @@ export class HttpTransport implements TransportInterface {
 
   private registerObservatoryRoutes() {
     this.app.get(
-      '/observatory/monthly_keyfigures',
+      '/observatory/monthly-keyfigures',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -904,7 +904,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/monthly_flux',
+      '/observatory/monthly-flux',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -914,7 +914,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/evol_monthly_flux',
+      '/observatory/evol-monthly-flux',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -924,7 +924,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/best_monthly_flux',
+      '/observatory/best-monthly-flux',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -934,7 +934,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/monthly_flux/last',
+      '/observatory/monthly-flux/last',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -944,7 +944,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/monthly_occupation',
+      '/observatory/monthly-occupation',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -954,7 +954,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/evol_monthly_occupation',
+      '/observatory/evol-monthly-occupation',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -966,7 +966,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/best_monthly_territories',
+      '/observatory/best-monthly-territories',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -998,7 +998,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/journeys_by_hours',
+      '/observatory/journeys-by-hours',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
@@ -1008,7 +1008,7 @@ export class HttpTransport implements TransportInterface {
       }),
     );
     this.app.get(
-      '/observatory/journeys_by_distances',
+      '/observatory/journeys-by-distances',
       rateLimiter(),
       asyncHandler(async (req, res, next) => {
         const response = await this.kernel.handle(
