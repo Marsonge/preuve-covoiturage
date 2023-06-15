@@ -35,6 +35,6 @@ const config = {
   ...(Object.keys(postgresTls).length ? { ssl: {...postgresTls, rejectUnauthorized: false }} : {}),
 };
 
-migrate(config, false)
+migrate(config, false, false)
   .then(() => console.log('Done'))
   .catch((e) => console.error(e))
