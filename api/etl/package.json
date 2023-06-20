@@ -1,0 +1,15 @@
+{
+  "name": "@pdc/etl",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "up": "POSTGRES_SCHEMA=infrastructures node ./dist/cli.js",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "main": "./dist/cli.js",
+  "dependencies": {
+    "@betagouvpdc/evolution-geo": "^1.2.7"
+  }
+}

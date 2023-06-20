@@ -1,8 +1,9 @@
 import { AbstractDatastructure } from '@betagouvpdc/evolution-geo';
 
-export class CreateAiresCovoiturageTable extends AbstractDatastructure {
-  static uuid = 'create_aires_covoiturage_table';
-  static table = 'aires_covoiturage';
+export class CreateBlncTable extends AbstractDatastructure {
+  static uuid = 'create_bnlc_table';
+  static table = 'bnlc';
+  static year = 2023;
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
       DROP TABLE IF EXISTS ${this.tableWithSchema};

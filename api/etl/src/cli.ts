@@ -1,4 +1,4 @@
-const URL = require('url');
+import url from 'node:url';
 const { readFileSync } = require('fs');
 const { migrate } = require('./index');
 
@@ -8,7 +8,7 @@ function tlsSetup(key, baseEnvKey) {
 
   let cert;
   if (asVarEnvName in process.env) {
-    cert = process.env[asVarEnvName].toString().replace(/\\n/g, '\n');
+    cert = process.env[asVarEnvName]!.toString().replace(/\\n/g, '\n');
   } else if (asPathEnvName in process.env) {
     cert = readFileSync(process.env[asPathEnvName], 'utf-8');
   } else {
@@ -22,19 +22,18 @@ const postgresTls = {
   ...tlsSetup('key', 'APP_POSTGRES_KEY'),
 };
 
-const dbUrl = URL.parse(process.env.APP_POSTGRES_URL);
-const [user, ...password] = dbUrl.auth.split(':');
+const dbUrl = new url.URL(process.env.APP_POSTGRES_URL || '');
 
 const config = {
       driver: 'pg',
-      user,
-      password: password.join(''),
+      user:dbUrl.username,
+      password: dbUrl.password,
       host: dbUrl.hostname,
       database: dbUrl.pathname.replace('/', ''),
       port: parseInt(dbUrl.port),
   ...(Object.keys(postgresTls).length ? { ssl: {...postgresTls, rejectUnauthorized: false }} : {}),
 };
 
-migrate(config, false)
+migrate(config)
   .then(() => console.log('Done'))
   .catch((e) => console.error(e))
