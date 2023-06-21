@@ -6,14 +6,15 @@ import { PointInterface, InseeCoderInterface } from '../interfaces';
 @provider()
 export class LocalGeoProvider implements InseeCoderInterface {
   protected fn = 'geo.get_latest_by_point';
-  protected fb = 'geo.get_closest_country';
+  protected fbcom = 'geo.get_closest_com';
+  protected fbcountry = 'geo.get_closest_country';
 
   constructor(protected connection: PostgresConnection) {}
 
   async positionToInsee(geo: PointInterface): Promise<string> {
     const { lat, lon } = geo;
 
-    const comResultInFrance = await this.connection.getClient().query({
+    const positionInCom = await this.connection.getClient().query({
       text: `
         SELECT arr
         FROM ${this.fn}($1::float, $2::float)
@@ -22,23 +23,31 @@ export class LocalGeoProvider implements InseeCoderInterface {
       values: [lon, lat],
     });
 
-    if (comResultInFrance.rowCount > 0) {
-      return comResultInFrance.rows[0].arr;
-    }
-
-    const comResultOutFrance = await this.connection.getClient().query({
+    const positionClosestCom = await this.connection.getClient().query({
       text: `
         SELECT arr
-        FROM ${this.fb}($1::float, $2::float)
-        WHERE com IS NULL
+        FROM ${this.fbcom}($1::float, $2::float)
       `,
       values: [lon, lat],
     });
 
-    if (comResultOutFrance.rowCount === 0) {
+    const positionClosestCountry = await this.connection.getClient().query({
+      text: `
+        SELECT arr
+        FROM ${this.fbcountry}($1::float, $2::float)
+      `,
+      values: [lon, lat],
+    });
+
+    if (positionInCom.rowCount > 0) {
+      return positionInCom.rows[0].arr;
+    } 
+    if (positionClosestCom.rowCount > 0) {
+      return positionClosestCom.rows[0].arr;
+    }
+    if (positionClosestCountry.rowCount === 0) {
       throw new NotFoundException();
     }
-
-    return comResultOutFrance.rows[0].arr;
+    return positionClosestCountry.rows[0].arr;
   }
 }
